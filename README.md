@@ -1,2 +1,2 @@
 # Nexus
-Email Bomber
+The Nexus is a simple email bomber.
