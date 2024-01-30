@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass
 class EmailContent:
-    body: str
-    subject: str
+    body: str = ""
+    subject: str = ""
     sender: str
     recipients: list[str]
