@@ -1,3 +1,4 @@
+# Third-party modules
 from termcolor import colored as cl
 from pyfiglet import figlet_format as ff
 
