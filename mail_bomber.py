@@ -1,10 +1,13 @@
-import smtplib
-import sys
+# Built-in modules
+from smtplib import SMTP
+from sys import exit
 from random import choice
 
+# Third-party packages
 from termcolor import colored as cl
 from pyfiglet import figlet_format as ff
 
+# Local modules
 from email_account import EmailAccount
 from email_accounts import ACCOUNTS
 
