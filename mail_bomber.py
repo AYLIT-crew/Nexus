@@ -12,14 +12,8 @@ from pyfiglet import figlet_format as ff
 # Local modules
 from email_accounts import ACCOUNTS
 from error import fatal_error
-
-def send_email(session: SMTP_SSL, sender: str, recipients: list[str],
-               mime_content: MIMEText) -> None:
-    """
-    Send an email using the provided SMTP_SSL session.
-    """
-
-
+from logo import print_logo
+from other_utils import join_with_and
 
 
 # parse the command-line arguments
@@ -44,7 +38,9 @@ if not args.target: fatal_error("No target argument provided.")
 
 
 
-    
+print_logo()
+
+
 # randomly choose an account
 account = choice(ACCOUNTS)
 
@@ -58,7 +54,12 @@ mime_content['To'] = ', '.join(args.target)
 session = SMTP_SSL('smtp.gmail.com', SMTP_SSL_PORT)
 session.login(account.address, account.password)
 
+print(cl("SMTP connection successful ☑", "green"))
+print(cl(f"Sending {args.num_emails} e-mails to {join_with_and(args.target)}", "green"))
+
 # send the e-mails
-for _ in range(args.num_emails):
+for mail_no in range(args.num_emails):
+
     session.sendmail(account.address, args.target, mime_content.as_string())
+    print(cl(f'Mail {mail_no + 1} sent successfully ☑', 'green'))
     
